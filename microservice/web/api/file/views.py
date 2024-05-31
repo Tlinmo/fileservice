@@ -4,7 +4,6 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import JWTError, jwt
 
 from microservice.web.api.file.schema import PublicFile, File
 from microservice.web.api.user.schema import UserCreate, PrivateUser, Token, TokenData, PublicUser
