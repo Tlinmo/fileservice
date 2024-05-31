@@ -1,3 +1,18 @@
+@font-face {
+    src: url("fonts\Karantina-Regular.ttf") format("truetype");
+    font-family: "Karantina-Regular";
+    font-style: normal; 
+    font-weight: normal; 
+}
+
+
+h1 {
+    font-size: 100px;
+    font-family: ;
+}
+form > h1 {
+    transform: rotate(-180deg);
+}
 .spisok {
     overflow: hidden;
 }
