@@ -4,6 +4,7 @@ import gzip
 import tempfile
 
 from fastapi import UploadFile
+from fastapi.responses import StreamingResponse
 from cryptography.fernet import Fernet
 
 from microservice.settings import settings
@@ -29,10 +30,16 @@ def compress_file(filename: str):
 
 
 # Чтение сжатого файла
-def read_compress_file(filename):
-    with gzip.open(filename + ".gz", "rb") as f:
-        file_content = f.read()
-        return file_content
+async def read_compress_file(filename: str):
+    def generate():
+        with gzip.open(filename, "rb") as f:
+            chunk = f.read(1024)
+            while chunk:
+                yield chunk
+                chunk = f.read(1024)
+
+    return StreamingResponse(generate())
+
 
 
 # Шифрование файла
