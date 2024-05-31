@@ -31,4 +31,4 @@ class PrivateUser(UserBase):
     file_size: int = -1
     can_delete: bool = False
     jpg_quality: int = 100
-    hash_file: bool = False
+    crypt_file: bool = False
