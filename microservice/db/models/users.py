@@ -11,7 +11,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String, index=True)
     is_superuser = Column(Boolean, default=False)
-    file_type = Column(ARRAY(String), default=[".*"])
+    file_type = Column(ARRAY(String), default=["*"])
     file_size = Column(Integer, default=-1)
     can_delete = Column(Boolean, default=False)
     jpg_quality = Column(Integer, default=100)
