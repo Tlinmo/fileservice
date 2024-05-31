@@ -75,7 +75,7 @@ async def get_file(
         if current_user.crypt_file:
             file_b = read_encrypt_compress_file(path)
         else:
-            file_b = read_compress_file(path)
+            file_b = await read_compress_file(path)
         return StreamingResponse(
             file_b,
             media_type='application/octet-stream',
