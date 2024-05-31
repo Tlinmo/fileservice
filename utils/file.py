@@ -10,15 +10,6 @@ from microservice.settings import settings
 from microservice.settings import UPLOAD_DIRECTORY
 
 
-def get_folder_size() -> float:
-    total_size = 0
-    for dirpath, dirnames, filenames in os.walk(UPLOAD_DIRECTORY):
-        for f in filenames:
-            fp = os.path.join(dirpath, f)
-            total_size += os.path.getsize(fp)
-    return total_size / (1024**3)
-
-
 def _path_to_file(file_type: str, filename, user_id: int) -> str:
     _directory = f"{UPLOAD_DIRECTORY}/{user_id}/{file_type}/"
 
@@ -43,6 +34,7 @@ def read_compress_file(filename):
         file_content = f.read()
         return file_content
 
+
 # Шифрование файла
 def encrypt_file(filename):
     cipher = Fernet(settings.encrypt_key)
@@ -52,23 +44,24 @@ def encrypt_file(filename):
         with open(f"{filename}.encrypted", "wb") as f_out:
             f_out.write(encrypted_data)
             os.remove(filename)
-            
+
 
 # Чтение зашифрованного файла
 def read_encrypt_file(filename):
     cipher = Fernet(settings.encrypt_key)
 
-    with open(f'{filename}', "rb") as f:
+    with open(f"{filename}", "rb") as f:
         encrypted_data = f.read()
         decrypted_data = cipher.decrypt(encrypted_data)
-    
+
     return decrypted_data
 
 
+#  Чтение зашифрованного сжатого файла
 def read_encrypt_compress_file(filename):
     cipher = Fernet(settings.encrypt_key)
 
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         encrypted_data = f.read()
         decrypted_data = cipher.decrypt(encrypted_data)
 
@@ -76,12 +69,19 @@ def read_encrypt_compress_file(filename):
         temp_file.write(decrypted_data)
         temp_file_path = temp_file.name
 
-    with gzip.open(temp_file_path, 'rb') as f:
+    with gzip.open(temp_file_path, "rb") as f:
         data = f.read()
         return data
 
+
 # Сохранение файла
-def save(file: UploadFile, filename: str, user_id: int, zipped: bool = True, encrypted: bool = False):
+def save(
+    file: UploadFile,
+    filename: str,
+    user_id: int,
+    zipped: bool = True,
+    encrypted: bool = False,
+):
 
     file_type = file.headers.get("content-type")
     if file_type:
@@ -95,9 +95,7 @@ def save(file: UploadFile, filename: str, user_id: int, zipped: bool = True, enc
         shutil.copyfileobj(file.file, buffer)
         if zipped:
             compress_file(directory)
-            directory = _path_to_file(file_type, f'{filename}.gz', user_id)
+            directory = _path_to_file(file_type, f"{filename}.gz", user_id)
         if encrypted:
             encrypt_file(directory)
-            directory = _path_to_file(file_type, f'{filename}.encrypted', user_id)
-
-compress_file('test.txt')
+            directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
