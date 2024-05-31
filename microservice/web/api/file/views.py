@@ -39,25 +39,28 @@ async def upload_files(
 ):
     file_type = file.filename.split(".")[-1]
     if file_type in current_user.file_type or current_user.file_type == ["*"]:
-        file_size = save(
-            file,
-            file.filename,
-            current_user.id,
-            True,
-            current_user.crypt_file
-        )
-        await crud.file.save_file(
-            db,
-            File(
-                file_name=file.filename,
-                user_id=current_user.id,
-                file_size=file_size,
-                file_type=file_type,
-                date=datetime.now()
+        if not (await crud.file.get_file(db, current_user.id, file.filename)):
+            file_size = save(
+                file,
+                file.filename,
+                current_user.id,
+                True,
+                current_user.crypt_file
             )
-        )
+            await crud.file.save_file(
+                db,
+                File(
+                    file_name=file.filename,
+                    user_id=current_user.id,
+                    file_size=file_size,
+                    file_type=file_type,
+                    date=datetime.now()
+                )
+            )
+        else:
+            raise HTTPException(400, "File already exited")
     else:
-        raise HTTPException(400, "File not Found")
+        raise HTTPException(403, "File type not accepted")
 
 
 @router.post("/get_file")
