@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <link rel="stylesheet" href="style.css">
-     <title>fileServis</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>fileServis</title>
 </head>
-
 <body>
     <nav>
         <form action="myFiles.html">
@@ -19,12 +17,13 @@
     </nav>
     <main>
         <h1>FileServer</h1>
-        <div id="download">
+        <div>
             <p>Загрузить</p>
+            <div id="dropZone" class="drop-zone">
+                <p>Перетащите файлы сюда</p>
+            </div>
         </div>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
     </main>
+    <script src="download.js"></script>
 </body>
+</html>

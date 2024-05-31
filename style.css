@@ -1,3 +1,20 @@
-.spisok {
-    overflow: hidden;
+.drop-zone {
+    border: 2px dashed #007BFF;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    color: #007BFF;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.drop-zone.dragover {
+    background-color: #E8F0FE;
+}
+.file-options {
+    margin-top: 10px;
+}
+
+.file-options button {
+    margin-right: 10px;
 }
