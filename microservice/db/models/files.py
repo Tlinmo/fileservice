@@ -8,7 +8,7 @@ class File(Base):
     __tablename__ = "files"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(String, index=True)
+    user_id = Column(Integer, index=True)
     file_size = Column(Double, index=True)
     file_type = Column(String, index=True)
     file_name = Column(String, index=True)

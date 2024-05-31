@@ -7,7 +7,8 @@ from microservice.db.models import users, files
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-async def get_files(db: AsyncSession, user_id: str, skip: int = 0, limit: int = 100):
+async def get_files(db: AsyncSession, user_id: int, skip: int = 0, limit: int = 100):
+    print(user_id, skip, limit)
     sql = (
         select(files.File)
         .filter(files.File.user_id == user_id)
@@ -15,7 +16,10 @@ async def get_files(db: AsyncSession, user_id: str, skip: int = 0, limit: int = 
         .slice(skip, skip + limit)
     )
     _files = await db.execute(sql)
-    return list(_files.scalar())
+    if _files.scalar():
+        return list(_files.scalar())
+    else:
+        return []
 
 
 async def save_file(db: AsyncSession, file: File):
