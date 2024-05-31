@@ -89,14 +89,14 @@ def save(
 
     with open(directory, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-        file_size = os.path.getsize(directory)
-        if zipped:
-            compress_file(directory)
-            directory = _path_to_file(file_type, f"{filename}.gz", user_id)
-            filename = f"{filename}.gz"
-        if encrypted:
-            encrypt_file(directory)
-            directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
-            filename = f"{filename}.encrypted"
-            
-        return file_size
+        
+    file_size = os.path.getsize(directory)
+    if zipped:
+        compress_file(directory)
+        directory = _path_to_file(file_type, f"{filename}.gz", user_id)
+        filename = f"{filename}.gz"
+    if encrypted:
+        encrypt_file(directory)
+        directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
+        filename = f"{filename}.encrypted"
+    return file_size
