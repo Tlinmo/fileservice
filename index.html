@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>fileServis</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <link rel="stylesheet" href="style.css">
+     <title>fileServis</title>
 </head>
+
 <body>
     <main>
-        <h1>микросервис для хранения файлов</h1>
+     <h1>микросервис для хранения файлов</h1>
+     <div>
         <div>
-            <div>
-                <p>FileServer</p>
-                <label for="name">Введите логин</label>
-                <input type="text" id="name" placeholder="логин">
-                <label for="password">Введите пароль</label>
-                <input type="password" id="password" placeholder="пароль">
-                <button id="loginButton">вход</button> 
-                <p>FileServer</p>
-            </div>
-            <div>
-                <p>ещё нет аккаунта?</p>
-                <form action="registration.html">
-                    <button>зарегистрироваться</button> 
-                </form>
-            </div>
-        </div>
+            <p>FileServer</p>
+            <label for="name">Введите логин</label>
+            <input type="text" id="name" placeholder="логин">
+            <label for="password">Введите пароль</label>
+            <input type="text" id="password" placeholder="пароль">
+            <form action="download.html">
+                <button>вход</button> 
+            </form>
+            <p>FileServer</p>
+         </div>
+         <div>
+            <p>ещё нет аккаунта?</p>
+            <form action="registration.html">
+                <button>зарегистрироваться</button> 
+            </form>
+         </div>
+     </div>
     </main>
-    <script src="index.js"></script>
 </body>
-</html>
