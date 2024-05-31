@@ -5,10 +5,6 @@ from tempfile import gettempdir
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
-from dotenv import load_dotenv
-
-
-load_dotenv()
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10080
@@ -36,7 +32,7 @@ class Settings(BaseSettings):
     """
 
     host: str = "127.0.0.1"
-    port: int = 8000
+    port: int = 12315
     # quantity of workers for uvicorn
     workers_count: int = 1
     # Enable uvicorn reloading
