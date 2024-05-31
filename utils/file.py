@@ -23,6 +23,7 @@ def _path_to_file(file_type: str, filename, user_id: int) -> str:
 def compress_file(filename: str):
     with open(filename, "rb") as f:
         data = f.read()
+        print(data)
         with gzip.open(f"{filename}.gz", "wb") as f_out:
             f_out.write(data)
             #os.remove(filename)
