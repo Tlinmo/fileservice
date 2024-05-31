@@ -24,7 +24,7 @@ async def get_file(db: AsyncSession, user_id: int, file_name: str):
         .filter(files.File.file_name == file_name)
     )
     file = await db.execute(sql)
-    return file.scalar().one_or_none()
+    return file.scalars().one_or_none()
 
 
 async def save_file(db: AsyncSession, file: File):
