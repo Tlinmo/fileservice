@@ -82,12 +82,7 @@ def save(
     zipped: bool = True,
     encrypted: bool = False,
 ):
-
-    file_type = file.content_type
-    if file_type:
-        file_type = file_type.split("/")[0]
-    else:
-        file_type = "more"
+    file_type = file.file_name.split(".")[-1]
 
     directory = _path_to_file(file_type, filename, user_id)
 

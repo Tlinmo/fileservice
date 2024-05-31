@@ -37,29 +37,27 @@ async def upload_files(
     file: UploadFile = FFile(...),
     db: AsyncSession = Depends(get_db_session)
 ):
-    content = await file.read()
-    file_size = save(
-        file,
-        file.filename,
-        current_user.id,
-        True,
-        current_user.crypt_file
-    )
-    await crud.file.save_file(
-        db,
-        File(
-            file_name=file.filename,
-            user_id=current_user.id,
-            file_size=file_size,
-            file_type=file.content_type.split("/")[0],
-            date=datetime.now()
+    file_type = file.file_name.split(".")[-1]
+    if file_type in current_user.file_type or current_user.file_type == ["*"]:
+        file_size = save(
+            file,
+            file.filename,
+            current_user.id,
+            True,
+            current_user.crypt_file
         )
-    )
-    return {
-        "filename": file.filename,
-        "content_type": file.content_type,
-        "content": content.decode('utf-8')
-    }
+        await crud.file.save_file(
+            db,
+            File(
+                file_name=file.filename,
+                user_id=current_user.id,
+                file_size=file_size,
+                file_type=file_type,
+                date=datetime.now()
+            )
+        )
+    else:
+        raise HTTPException(400, "File not Found")
 
 
 @router.post("/get_file")

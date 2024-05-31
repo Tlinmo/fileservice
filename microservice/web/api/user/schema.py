@@ -27,7 +27,7 @@ class PrivateUser(UserBase):
     id: int
     hashed_password: str
     is_superuser: bool = False
-    file_type: list[str] = [".*"]
+    file_type: list[str] = ["*"]
     file_size: int = -1
     can_delete: bool = False
     jpg_quality: int = 100
