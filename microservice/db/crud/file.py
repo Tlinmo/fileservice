@@ -15,11 +15,7 @@ async def get_files(db: AsyncSession, user_id: int, skip: int = 0, limit: int = 
         .slice(skip, skip + limit)
     )
     _files = await db.execute(sql)
-    scalar = list(_files.scalar())
-    if scalar[0]:
-        return scalar
-    else:
-        return []
+    return list(_files.scalars())
 
 async def get_file(db: AsyncSession, user_id: int, file_name: str):
     sql = (
@@ -28,7 +24,8 @@ async def get_file(db: AsyncSession, user_id: int, file_name: str):
         .filter(files.File.file_name == file_name)
     )
     file = await db.execute(sql)
-    return file.scalar()
+    return file.scalar().one_or_none()
+
 
 async def save_file(db: AsyncSession, file: File):
     db_file = files.File(**file.model_dump())
