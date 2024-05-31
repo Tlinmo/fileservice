@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from typing import Annotated, List
+import io
 
 from fastapi import APIRouter, Depends, HTTPException, status, File as FFile, UploadFile
 from fastapi.responses import StreamingResponse
@@ -72,10 +73,13 @@ async def get_file(
     file = await crud.file.get_file(db, current_user.id, file.file_name)
     if file:
         path = _path_to_file(file.file_type, file.file_name, current_user.id)
+        
         if current_user.crypt_file:
             file_b = read_encrypt_compress_file(path)
         else:
-            file_b = await read_compress_file(path)
+            file_b = read_compress_file(path)
+        file_b = io.BytesIO(file_b)
+        
         return StreamingResponse(
             file_b,
             media_type='application/octet-stream',
