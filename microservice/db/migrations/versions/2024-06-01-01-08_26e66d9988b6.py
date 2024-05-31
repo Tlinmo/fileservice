@@ -1,15 +1,15 @@
 """empty message
 
-Revision ID: 447c7002fe46
+Revision ID: 26e66d9988b6
 Revises: 819cbf6e030b
-Create Date: 2024-05-31 22:54:58.364773
+Create Date: 2024-06-01 01:08:04.424472
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "447c7002fe46"
+revision = "26e66d9988b6"
 down_revision = "819cbf6e030b"
 branch_labels = None
 depends_on = None
@@ -43,7 +43,7 @@ def upgrade() -> None:
         sa.Column("file_size", sa.Integer(), nullable=True),
         sa.Column("can_delete", sa.Boolean(), nullable=True),
         sa.Column("jpg_quality", sa.Integer(), nullable=True),
-        sa.Column("hash_file", sa.Boolean(), nullable=True),
+        sa.Column("crypt_file", sa.Boolean(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(

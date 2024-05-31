@@ -15,7 +15,7 @@ class User(Base):
     file_size = Column(Integer, default=-1)
     can_delete = Column(Boolean, default=False)
     jpg_quality = Column(Integer, default=100)
-    hash_file = Column(Boolean, default=False)
+    crypt_file = Column(Boolean, default=False)
     
 
 

@@ -83,7 +83,7 @@ def save(
     encrypted: bool = False,
 ):
 
-    file_type = file.headers.get("content-type")
+    file_type = file.content_type
     if file_type:
         file_type = file_type.split("/")[0]
     else:
@@ -93,9 +93,11 @@ def save(
 
     with open(directory, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+        file_size = os.path.getsize(directory)
         if zipped:
             compress_file(directory)
             directory = _path_to_file(file_type, f"{filename}.gz", user_id)
         if encrypted:
             encrypt_file(directory)
             directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
+        return file_size
