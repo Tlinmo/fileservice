@@ -30,7 +30,7 @@ def compress_file(filename: str):
 
 # Чтение сжатого файла
 def read_compress_file(filename):
-    with gzip.open(filename, "rb") as f:
+    with gzip.open(filename + ".gz", "rb") as f:
         file_content = f.read()
         return file_content
 
@@ -61,7 +61,7 @@ def read_encrypt_file(filename):
 def read_encrypt_compress_file(filename):
     cipher = Fernet(settings.encrypt_key)
 
-    with open(filename, "rb") as f:
+    with open(filename + ".gz.encrypted", "rb") as f:
         encrypted_data = f.read()
         decrypted_data = cipher.decrypt(encrypted_data)
 
