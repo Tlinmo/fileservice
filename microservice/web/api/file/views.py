@@ -37,7 +37,7 @@ async def upload_files(
     file: UploadFile = FFile(...),
     db: AsyncSession = Depends(get_db_session)
 ):
-    file_type = file.file_name.split(".")[-1]
+    file_type = file.filename.split(".")[-1]
     if file_type in current_user.file_type or current_user.file_type == ["*"]:
         file_size = save(
             file,
