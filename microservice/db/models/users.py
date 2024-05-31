@@ -1,88 +1,104 @@
-# type: ignore
-import uuid
-
-from fastapi import Depends
-from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, schemas
-from fastapi_users.authentication import (
-    AuthenticationBackend,
-    BearerTransport,
-    JWTStrategy,
-)
-from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
+from sqlalchemy.orm import relationship
 
 from microservice.db.base import Base
-from microservice.db.dependencies import get_db_session
-from microservice.settings import settings
 
 
-class User(SQLAlchemyBaseUserTableUUID, Base):
-    """Represents a user entity."""
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_superuser = Column(Boolean, default=False)
 
 
-class UserRead(schemas.BaseUser[uuid.UUID]):
-    """Represents a read command for a user."""
+
+# # type: ignore
+# import uuid
+
+# from fastapi import Depends
+# from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, schemas
+# from fastapi_users.authentication import (
+#     AuthenticationBackend,
+#     BearerTransport,
+#     JWTStrategy,
+# )
+# from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
+# from sqlalchemy.ext.asyncio import AsyncSession
+
+# from microservice.db.base import Base
+# from microservice.db.dependencies import get_db_session
+# from microservice.settings import settings
 
 
-class UserCreate(schemas.BaseUserCreate):
-    """Represents a create command for a user."""
+# class User(SQLAlchemyBaseUserTableUUID, Base):
+#     """Represents a user entity."""
 
 
-class UserUpdate(schemas.BaseUserUpdate):
-    """Represents an update command for a user."""
+# class UserRead(schemas.BaseUser[uuid.UUID]):
+#     """Represents a read command for a user."""
 
 
-class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
-    """Manages a user session and its tokens."""
-
-    reset_password_token_secret = settings.users_secret
-    verification_token_secret = settings.users_secret
+# class UserCreate(schemas.BaseUserCreate):
+#     """Represents a create command for a user."""
 
 
-async def get_user_db(
-    session: AsyncSession = Depends(get_db_session),
-) -> SQLAlchemyUserDatabase:
-    """
-    Yield a SQLAlchemyUserDatabase instance.
-
-    :param session: asynchronous SQLAlchemy session.
-    :yields: instance of SQLAlchemyUserDatabase.
-    """
-    yield SQLAlchemyUserDatabase(session, User)
+# class UserUpdate(schemas.BaseUserUpdate):
+#     """Represents an update command for a user."""
 
 
-async def get_user_manager(
-    user_db: SQLAlchemyUserDatabase = Depends(get_user_db),
-) -> UserManager:
-    """
-    Yield a UserManager instance.
+# class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
+#     """Manages a user session and its tokens."""
 
-    :param user_db: SQLAlchemy user db instance
-    :yields: an instance of UserManager.
-    """
-    yield UserManager(user_db)
+#     reset_password_token_secret = settings.users_secret
+#     verification_token_secret = settings.users_secret
 
 
-def get_jwt_strategy() -> JWTStrategy:
-    """
-    Return a JWTStrategy in order to instantiate it dynamically.
+# async def get_user_db(
+#     session: AsyncSession = Depends(get_db_session),
+# ) -> SQLAlchemyUserDatabase:
+#     """
+#     Yield a SQLAlchemyUserDatabase instance.
 
-    :returns: instance of JWTStrategy with provided settings.
-    """
-    return JWTStrategy(secret=settings.users_secret, lifetime_seconds=None)
+#     :param session: asynchronous SQLAlchemy session.
+#     :yields: instance of SQLAlchemyUserDatabase.
+#     """
+#     yield SQLAlchemyUserDatabase(session, User)
 
 
-bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
-auth_jwt = AuthenticationBackend(
-    name="jwt",
-    transport=bearer_transport,
-    get_strategy=get_jwt_strategy,
-)
+# async def get_user_manager(
+#     user_db: SQLAlchemyUserDatabase = Depends(get_user_db),
+# ) -> UserManager:
+#     """
+#     Yield a UserManager instance.
 
-backends = [
-    auth_jwt,
-]
+#     :param user_db: SQLAlchemy user db instance
+#     :yields: an instance of UserManager.
+#     """
+#     yield UserManager(user_db)
 
-api_users = FastAPIUsers[User, uuid.UUID](get_user_manager, backends)
 
-current_active_user = api_users.current_user(active=True)
+# def get_jwt_strategy() -> JWTStrategy:
+#     """
+#     Return a JWTStrategy in order to instantiate it dynamically.
+
+#     :returns: instance of JWTStrategy with provided settings.
+#     """
+#     return JWTStrategy(secret=settings.users_secret, lifetime_seconds=None)
+
+
+# bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
+# auth_jwt = AuthenticationBackend(
+#     name="jwt",
+#     transport=bearer_transport,
+#     get_strategy=get_jwt_strategy,
+# )
+
+# backends = [
+#     auth_jwt,
+# ]
+
+# api_users = FastAPIUsers[User, uuid.UUID](get_user_manager, backends)
+
+# current_active_user = api_users.current_user(active=True)

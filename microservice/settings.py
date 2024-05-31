@@ -6,6 +6,9 @@ from tempfile import gettempdir
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
 
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 10080
+
 TEMP_DIR = Path(gettempdir())
 
 
