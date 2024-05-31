@@ -25,7 +25,7 @@ def compress_file(filename: str):
         data = f.read()
         with gzip.open(f"{filename}.gz", "wb") as f_out:
             f_out.write(data)
-            os.remove(filename)
+            #os.remove(filename)
 
 
 # Чтение сжатого файла
@@ -43,7 +43,7 @@ def encrypt_file(filename):
         encrypted_data = cipher.encrypt(data)
         with open(f"{filename}.encrypted", "wb") as f_out:
             f_out.write(encrypted_data)
-            os.remove(filename)
+            #os.remove(filename)
 
 
 # Чтение зашифрованного файла
