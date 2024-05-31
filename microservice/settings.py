@@ -5,6 +5,10 @@ from tempfile import gettempdir
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10080
@@ -43,8 +47,13 @@ class Settings(BaseSettings):
 
     log_level: LogLevel = LogLevel.INFO
     users_secret: str = os.getenv("USERS_SECRET", "")
+
     # Variables for the database
-    db_file: Path = TEMP_DIR / "db.sqlite3"
+    db_host: str = os.getenv("DB_HOST", "localhost")
+    db_port: int = os.getenv("DB_PORT", 5432)
+    db_user: str = os.getenv("DB_USER", "postgres")
+    db_pass: str = os.getenv("DB_PASSWORD", "")
+    db_base: str = os.getenv("DB_NAME", "")
     db_echo: bool = False
 
     @property
@@ -55,10 +64,14 @@ class Settings(BaseSettings):
         :return: database URL.
         """
         return URL.build(
-            scheme="sqlite+aiosqlite",
-            path=f"///{self.db_file}",
+            scheme="postgresql+asyncpg",
+            host=self.db_host,
+            port=self.db_port,
+            user=self.db_user,
+            password=self.db_pass,
+            path=f"/{self.db_base}",
         )
-
+   
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="MICROSERVICE_",
