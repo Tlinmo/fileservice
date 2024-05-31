@@ -6,7 +6,6 @@ from tempfile import gettempdir
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
 
-
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10080
 UPLOAD_DIRECTORY = f"./media/uploads/"
@@ -34,7 +33,7 @@ class Settings(BaseSettings):
     encrypt_key: str = ""
 
     host: str = "127.0.0.1"
-    port: int = 8000
+    port: int = 12315
     # quantity of workers for uvicorn
     workers_count: int = 1
     # Enable uvicorn reloading

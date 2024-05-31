@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table, ARRAY
 from sqlalchemy.orm import relationship
 
 from microservice.db.base import Base
@@ -9,8 +9,14 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    hashed_password = Column(String, index=True)
     is_superuser = Column(Boolean, default=False)
+    file_type = Column(ARRAY(String), default=[".*"])
+    file_size = Column(Integer, default=-1)
+    can_delete = Column(Boolean, default=False)
+    jpg_quality = Column(Integer, default=100)
+    hash_file = Column(Boolean, default=False)
+    
 
 
 
