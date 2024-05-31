@@ -48,11 +48,11 @@ async def upload_files(
     await crud.file.save_file(
         db,
         File(
-            file.filename,
-            current_user.id,
-            file_size,
-            file.content_type.split("/")[0],
-            datetime.now()
+            file_name=file.filename,
+            user_id=current_user.id,
+            file_size=file_size,
+            file_type=file.content_type.split("/")[0],
+            date=datetime.now()
         )
     )
     return {
