@@ -32,3 +32,10 @@ class PrivateUser(UserBase):
     can_delete: bool = False
     jpg_quality: int = 100
     crypt_file: bool = False
+
+
+class UserUpdate(BaseModel):
+    file_type: list[str] = ["*"]
+    file_size: int = -1
+    can_delete: bool = False
+    crypt_file: bool = False

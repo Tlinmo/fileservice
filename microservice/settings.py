@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
-    encrypt_key: str = b'Wk-mIcdQD-y-CwBvJ8V9sEhs4PtcjI90-QLGNu0I9y4='
+    encrypt_key: str = ''
 
     host: str = "127.0.0.1"
     port: int = 12315

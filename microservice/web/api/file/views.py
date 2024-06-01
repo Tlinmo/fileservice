@@ -74,9 +74,7 @@ async def get_file(
 ):
     file = await crud.file.get_file(db, current_user.id, _file.file_name)
     if file:
-        path = _path_to_file(file.file_type, file.file_path, current_user.id)
-
-        file_b = reader(path)
+        file_b = reader(file.file_path)
         file_b = io.BytesIO(file_b)
 
         return StreamingResponse(

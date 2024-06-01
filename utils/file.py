@@ -27,9 +27,10 @@ def delete(filename: str):
 def compress_file(filename: str):
     with open(filename, "rb") as f:
         data = f.read()
-        with gzip.open(filename, "wb") as f_out:
+        with gzip.open(f"{filename}.gz", "wb") as f_out:
             f_out.write(data)
             os.remove(filename)
+            return f"{filename}.gz"
 
 
 # Чтение сжатого файла
@@ -48,7 +49,7 @@ def encrypt_file(filename: str):
         with open(f"{filename}.encrypted", "wb") as f_out:
             f_out.write(encrypted_data)
             os.remove(filename)
-
+            return f"{filename}.encrypted"
 
 # Чтение зашифрованного файла
 def _read_encrypt_file(filename: str):
@@ -86,14 +87,7 @@ def _read_file(filename: str):
 # Юзаем это для того что бы читать файлы и радуемся
 def reader(filename: str):
     file_type = filename.split(".")
-    file_type = 'gz.encrypted' if file_type[-1:-2] == ['gz', 'encrypted'] else file_type[-1]
-    
-    print(file_type)
-    print(file_type)
-    print(file_type)
-    print(file_type)
-    print(file_type)
-    print(file_type)
+    file_type = 'gz.encrypted' if file_type[-2:] == ['gz', 'encrypted'] else file_type[-1]
     
     match file_type:
         case "gz":
@@ -124,15 +118,12 @@ def save(
     file_size = os.path.getsize(directory) / 1000 / 1000
     if file_size > size_limit and size_limit != -1:
         return -1
-
+    
     if zipped:
-        compress_file(directory)
-        directory = _path_to_file(file_type, f"{file.filename}.gz", user_id)
-        filename = f"{file.filename}.gz"
+        filename = compress_file(directory)
     if encrypted:
-        encrypt_file(directory)
-        directory = _path_to_file(file_type, f"{file.filename}.encrypted", user_id)
-        filename = f"{file.filename}.encrypted"
+        filename = encrypt_file(filename)
+        
 
     return {
         "file_size": file_size,
