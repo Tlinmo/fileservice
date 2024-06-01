@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const dropZone = document.getElementById('dropZone');
     const currentUser = localStorage.getItem('currentUser');
+    const currentUserRole = localStorage.getItem('currentUserRole');
 
     if (!currentUser) {
         alert('Вы не авторизованы');
@@ -26,21 +27,59 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function handleFiles(files) {
-        const fileArray = Array.from(files);
-        fileArray.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const fileContent = event.target.result;
-                saveFile(currentUser, file.name, fileContent);
-            };
-            reader.readAsDataURL(file);
-        });
+        const user = JSON.parse(localStorage.getItem(currentUser));
+        const userFiles = JSON.parse(localStorage.getItem(currentUser + '_files')) || [];
+        
+        const errorMessages = [];
+        const successMessages = [];
+
+        if (user.maxFileCount && userFiles.length + files.length > user.maxFileCount) {
+            errorMessages.push(`Превышено максимальное количество файлов (${user.maxFileCount})`);
+        } else {
+            Array.from(files).forEach(file => {
+                if (user.maxFileSize && file.size / 1024 / 1024 > user.maxFileSize) {
+                    errorMessages.push(`Файл ${file.name} превышает максимальный размер (${user.maxFileSize} МБ)`);
+                    return;
+                }
+
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (user.allowedExtensions && !user.allowedExtensions.includes(fileExtension)) {
+                    errorMessages.push(`Файл ${file.name} имеет недопустимое расширение (${fileExtension})`);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const fileContent = event.target.result;
+                    userFiles.push({ name: file.name, content: fileContent });
+                    localStorage.setItem(currentUser + '_files', JSON.stringify(userFiles));
+                    successMessages.push(`Файл ${file.name} успешно загружен`);
+                    if (successMessages.length + errorMessages.length === files.length) {
+                        displayMessages(successMessages, errorMessages);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        if (successMessages.length + errorMessages.length === files.length) {
+            displayMessages(successMessages, errorMessages);
+        }
     }
 
-    function saveFile(user, fileName, fileContent) {
-        let userFiles = JSON.parse(localStorage.getItem(user + '_files')) || [];
-        userFiles.push({ name: fileName, content: fileContent });
-        localStorage.setItem(user + '_files', JSON.stringify(userFiles));
-        alert('Файл успешно загружен');
+    function displayMessages(successMessages, errorMessages) {
+        const messages = [];
+
+        if (errorMessages.length > 0) {
+            messages.push('Ошибки загрузки:\n' + errorMessages.join('\n'));
+        }
+
+        if (successMessages.length > 0) {
+            messages.push('Успешно загружены:\n' + successMessages.join('\n'));
+        }
+
+        if (messages.length > 0) {
+            alert(messages.join('\n\n'));
+        }
     }
 });

@@ -5,13 +5,7 @@
     font-weight: normal; 
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    background: #ccc;
-    padding: 0;
-    margin: 0;
-}
+
 body {
     background-image: url('images/qwe.jpg');
     background-repeat: no-repeat;
@@ -21,10 +15,8 @@ body {
 
 
 main > p {
-    margin-top: 0px;
     font-size: 50px;
     text-align: center;
-    padding-top: 20px;
 }
 p + div {
     display: flex;
@@ -36,7 +28,7 @@ p + div {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    max-height: 600px;
+ 
 }
 h1 {
     font-size: 100px;
@@ -57,9 +49,6 @@ input {
     width: 268px;
     height: 71px;
 }
-.zareg {
-    background-color: #E29A72;
-}
 form > button {
     border-radius: 10px;
     background-color:#5A93BD;
@@ -69,14 +58,9 @@ form > button {
     height: 71px;
     color: #1E2639;
 }
-#registerButton {
+.zareg {
     color: #1E2639;
     background-color: #E29A72;
-    border-radius: 10px;
-    font-size: 20px;
-    margin-top: 10px;
-    width: 275px;
-    height: 71px;
 }
 .spisok {
     overflow: hidden;
@@ -89,8 +73,7 @@ form > button {
     background-color: #F5F5F5;
     height: 290px;
     width: 435px;
-    margin-bottom: 100px;
-
+    margin-bottom: 90px;
 }
 .akk > p {
     text-align: center;
@@ -106,27 +89,10 @@ form > button {
     margin-bottom: 100px;
     width: 350px;
 }
-.ku {
-    display: flex;
-    justify-content: space-between;
-}
-.drop-zone {
-    margin-top: 30px;
-    font-size: 30px;
-    height: 300px;
-}
-#fileList {
-    font-size: 20px;
-}
-
-
-
-
-
 .error-message {
     color: red;
     margin-top: 10px;
-}
+
 .drop-zone {
     border: 2px dashed #007BFF;
     border-radius: 4px;

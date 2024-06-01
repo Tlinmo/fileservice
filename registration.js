@@ -1,6 +1,7 @@
 document.getElementById('registerButton').addEventListener('click', function () {
     const registerName = document.getElementById('registerName').value;
     const registerPassword = document.getElementById('registerPassword').value;
+    const registerRole = document.getElementById('registerRole').value;
     const registerError = document.getElementById('registerError');
 
     if (!registerName || !registerPassword) {
@@ -15,7 +16,8 @@ document.getElementById('registerButton').addEventListener('click', function () 
 
     const user = {
         username: registerName,
-        password: registerPassword
+        password: registerPassword,
+        role: registerRole
     };
 
     // Проверка, существует ли пользователь
