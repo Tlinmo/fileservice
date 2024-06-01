@@ -143,3 +143,6 @@ cython_debug/
 
 
 media/uploads/
+
+
+logs.txt
