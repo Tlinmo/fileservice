@@ -27,7 +27,7 @@ async def get_files(
     db: AsyncSession = Depends(get_db_session)
     ):
     if current_user.id == user_id or current_user.is_superuser:
-        return await crud.file.get_files(db, current_user.id, skip, limit)
+        return await crud.file.get_files(db, user_id, skip, limit)
     else:
         raise HTTPException(403, "You have no permission!")
     
@@ -46,8 +46,12 @@ async def upload_files(
                 file.filename,
                 current_user.id,
                 True,
-                current_user.crypt_file
+                current_user.crypt_file,
+                current_user.file_size
             )
+            if file_size == -1:
+                raise HTTPException(403, "File size out of limit")
+            
             await crud.file.save_file(
                 db,
                 File(
@@ -96,9 +100,12 @@ async def del_file(
     file_p: PublicFile,
     db: AsyncSession = Depends(get_db_session)
 ):
-    file = await crud.file.get_file(db, current_user.id, file_p.file_name)
-    if file:
-        delete(_path_to_file(file.file_type, file.file_name + ".gz" + ".encrypted" if current_user.crypt_file else "", current_user.id))
-        await crud.file.del_file(db, current_user.id, file.id)
+    if current_user.can_delete:
+        file = await crud.file.get_file(db, current_user.id, file_p.file_name)
+        if file:
+            delete(_path_to_file(file.file_type, file.file_name + ".gz" + ".encrypted" if current_user.crypt_file else "", current_user.id))
+            await crud.file.del_file(db, current_user.id, file.id)
+        else:
+            raise HTTPException(400, "File not Found")
     else:
-        raise HTTPException(400, "File not Found")
+        raise HTTPException(403, "You cannot delete file")
