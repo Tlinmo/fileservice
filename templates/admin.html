@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Админ Панель</title>
+</head>
+<body>
+    <main>
+        <p>Админ Панель</p>
+        <div class="adm">
+            <label for="username">Введите логин пользователя</label>
+            <input type="text" id="username" placeholder="логин пользователя">
+            <button id="searchUserButton">Найти пользователя</button>
+        </div>
+        <div id="userFilesSection" style="display: none;">
+            <h2>Файлы пользователя</h2>
+            <ul id="userFilesList"></ul>
+        </div>
+        <div id="userSettingsSection" style="display: none;">
+            <h2>Настройки пользователя</h2>
+            <label for="maxFileSize">Максимальный размер файла (в МБ)</label>
+            <input type="number" id="maxFileSize" placeholder="Размер файла в МБ">
+            <label for="allowedExtensions">Разрешенные расширения файлов (через запятую)</label>
+            <input type="text" id="allowedExtensions" placeholder="jpg,png,txt">
+            <label for="maxFileCount">Максимальное количество файлов</label>
+            <input type="number" id="maxFileCount" placeholder="Количество файлов">
+            <button id="saveSettingsButton">Сохранить настройки</button>
+        </div>
+        <div id="adminError" class="error-message"></div>
+    </main>
+    <script src="static/js/admin.js"></script>
+</body>
+</html>
