@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,28 +7,30 @@
      <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
      <title>fileServis</title>
 </head>
-
 <body>
     <main>
-     <p>Микросервис для хранения файлов</p>
-     <div>
-        <div class="reg">
-            <h1>FileServer</h1>
-            <label for="name">Введите логин</label>
-            <input type="text" id="name" placeholder="логин">
-            <label for="password">Введите пароль</label>
-            <input type="text" id="password" placeholder="пароль">
-            <form action="download.html">
-                <button>вход</button> 
-            </form>
-            <h1>FileServer</h1>
-         </div>
-         <div class="akk">
-            <p>Ещё нет аккаунта?</p>
-            <form action="registration.html">
-                <button class="zareg">зарегистрироваться</button> 
-            </form>
-         </div>
-     </div>
+        <p>Микросервис для хранения файлов</p>
+        <div>
+            <div class="reg">
+                <h1>FileServer</h1>
+                <label for="name">Введите логин</label>
+                <input type="text" id="name" placeholder="логин">
+                <label for="password">Введите пароль</label>
+                <input type="password" id="password" placeholder="пароль">
+                <form action="download.html">
+                    <button id="loginButton">вход</button>
+                </form>
+                <div id="loginError" class="error-message"></div>
+                <h1>FileServer</h1>
+            </div>
+            <div class="akk">
+                <p>Ещё нет аккаунта?</p>
+                <form action="registration.html">
+                    <button class="zareg">зарегистрироваться</button> 
+                </form>
+            </div>
+        </div>
     </main>
+    <script src="index.js"></script>
 </body>
+</html>

@@ -3,6 +3,11 @@ document.getElementById('loginButton').addEventListener('click', function () {
     const loginPassword = document.getElementById('password').value;
     const loginError = document.getElementById('loginError');
 
+    if (!loginName || !loginPassword) {
+        loginError.textContent = 'Введите логин и пароль';
+        return;
+    }
+
     const storedUser = localStorage.getItem(loginName);
 
     if (storedUser) {

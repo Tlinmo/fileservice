@@ -89,13 +89,9 @@ form > button {
     margin-bottom: 100px;
     width: 350px;
 }
-
-
-
-
-
-
-
+.error-message {
+    color: red;
+    margin-top: 10px;
 
 .drop-zone {
     border: 2px dashed #007BFF;
