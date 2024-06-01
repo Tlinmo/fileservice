@@ -1,6 +1,7 @@
 document.getElementById('loginButton').addEventListener('click', function () {
     const loginName = document.getElementById('name').value;
     const loginPassword = document.getElementById('password').value;
+    const loginError = document.getElementById('loginError');
 
     const storedUser = localStorage.getItem(loginName);
 
@@ -13,9 +14,9 @@ document.getElementById('loginButton').addEventListener('click', function () {
             // Перенаправление на страницу личного кабинета
             window.location.href = 'lk.html';
         } else {
-            alert('Неверный пароль');
+            loginError.textContent = 'Неверный пароль';
         }
     } else {
-        alert('Пользователь не найден');
+        loginError.textContent = 'Пользователь не найден';
     }
 });
