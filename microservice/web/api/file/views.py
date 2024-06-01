@@ -76,10 +76,6 @@ async def get_file(
     if file:
         path = _path_to_file(file.file_type, file.file_path, current_user.id)
 
-        # if current_user.crypt_file:
-        #     file_b = read_encrypt_compress_file(path)
-        # else:
-        #     file_b = read_compress_file(path)
         file_b = reader(path)
         file_b = io.BytesIO(file_b)
 
