@@ -1,0 +1,155 @@
+@font-face {
+    src: url("fonts\Karantina-Regular.ttf");
+    font-family: "Karantina";
+    font-style: normal; 
+    font-weight: normal; 
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-image: url('images/qwe.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+main > p {
+    margin-top: 0px;
+    font-size: 50px;
+    text-align: center;
+    padding-top: 20px;
+}
+p + div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.reg {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 600px;
+}
+h1 {
+    font-size: 100px;
+    font-family: "Karantina";
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+.reverse {
+    transform: rotate(180deg);
+    transform-origin: top left;
+    margin-left: 315px;
+    margin-top: 100px;
+}
+label {
+    font-size: 20px;
+}
+input, #role {
+    width: 268px;
+    height: 71px;
+}
+.zareg {
+    background-color: #E29A72;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 275px;
+    height: 71px;
+    color: #1E2639;
+}
+#loginButton, form > button{
+    border-radius: 10px;
+    background-color:#5A93BD;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 275px;
+    height: 71px;
+    color: #1E2639;
+}
+#registerButton {
+    color: #1E2639;
+    background-color: #E29A72;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 275px;
+    height: 71px;
+}
+.spisok {
+    overflow: hidden;
+}
+.akk {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    height: 290px;
+    width: 435px;
+    margin-bottom: 100px;
+
+}
+.akk > p {
+    text-align: center;
+    font-size: 65px;
+    margin: 0px;
+}
+.parol {
+    border-radius: 10px;
+    text-align: center;
+    color: #40485E;
+    font-size: 30px;
+    background-color: #F5F5F5;
+    margin-bottom: 100px;
+    width: 350px;
+}
+.ku {
+    display: flex;
+    justify-content: space-between;
+}
+.drop-zone {
+    margin-top: 30px;
+    font-size: 30px;
+    height: 300px;
+}
+#fileList {
+    font-size: 20px;
+}
+
+
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+
+.drop-zone {
+    border: 2px dashed #007BFF;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    color: #007BFF;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.drop-zone.dragover {
+    background-color: #E8F0FE;
+}
+.file-options {
+    margin-top: 10px;
+}
+
+.file-options button {
+    margin-right: 10px;
+}
+
+
