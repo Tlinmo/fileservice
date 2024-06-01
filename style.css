@@ -24,10 +24,6 @@ p + div {
     justify-content: center;
     align-items: center;
 }
-main > p {
-    font-size: 50px;
-    align-self: center;
-}
 .reg {
     display: flex;
     flex-direction: column;
@@ -39,7 +35,6 @@ h1 {
     font-family: "Karantina";
     margin-top: 10px;
     margin-bottom: 0px;
-    margin-bottom: 10px;
 }
 form + h1 {
     transform: rotate(180deg);
@@ -102,9 +97,6 @@ form > button {
 
 
 
-.spisok {
-    overflow: hidden;
-}
 .drop-zone {
     border: 2px dashed #007BFF;
     border-radius: 4px;
@@ -124,8 +116,4 @@ form > button {
 
 .file-options button {
     margin-right: 10px;
-}
-.error-message {
-    color: red;
-    margin-top: 10px;
 }
