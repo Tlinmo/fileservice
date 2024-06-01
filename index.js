@@ -3,6 +3,7 @@ document.getElementById('loginButton').addEventListener('click', function(event)
     
     const loginName = document.getElementById('name').value;
     const loginPassword = document.getElementById('password').value;
+    const role = document.getElementById('role').value;
     const loginError = document.getElementById('loginError');
 
     if (!loginName || !loginPassword) {
@@ -24,6 +25,13 @@ document.getElementById('loginButton').addEventListener('click', function(event)
                 window.location.href = 'admin.html';
             } else {
                 window.location.href = 'download.html';
+            }
+            localStorage.setItem('currentUserRole', user.role);
+            // Перенаправление на страницу личного кабинета или админ панели
+            if (user.role === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'lk.html';
             }
         } else {
             loginError.textContent = 'Неверный пароль';
