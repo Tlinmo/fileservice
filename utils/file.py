@@ -27,7 +27,6 @@ def delete(filename):
 def compress_file(filename: str):
     with open(filename, "rb") as f:
         data = f.read()
-        print(data)
         with gzip.open(f"{filename}.gz", "wb") as f_out:
             f_out.write(data)
             os.remove(filename)
