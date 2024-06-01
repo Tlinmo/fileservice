@@ -45,9 +45,9 @@ async def upload_files(
                 file,
                 file.filename,
                 current_user.id,
+                current_user.file_size,
                 True,
-                current_user.crypt_file,
-                current_user.file_size
+                current_user.crypt_file
             )
             if file_size == -1:
                 raise HTTPException(403, "File size out of limit")

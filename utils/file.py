@@ -83,7 +83,7 @@ def save(
     file: UploadFile,
     filename: str,
     user_id: int,
-    size_limit: float,
+    size_limit: int,
     zipped: bool = True,
     encrypted: bool = False,
     quality: int = 100
