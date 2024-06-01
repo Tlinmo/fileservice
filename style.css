@@ -28,7 +28,7 @@ p + div {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
- 
+    margin-right: 200px;
 }
 h1 {
     font-size: 100px;
@@ -58,9 +58,14 @@ form > button {
     height: 71px;
     color: #1E2639;
 }
-.zareg {
+#registerButton {
     color: #1E2639;
     background-color: #E29A72;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 275px;
+    height: 71px;
 }
 .spisok {
     overflow: hidden;
@@ -73,7 +78,7 @@ form > button {
     background-color: #F5F5F5;
     height: 290px;
     width: 435px;
-    margin-bottom: 90px;
+
 }
 .akk > p {
     text-align: center;
