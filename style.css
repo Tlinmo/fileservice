@@ -21,10 +21,10 @@ body {
 
 
 main > p {
-    padding-top: 50px;
     margin-top: 0px;
     font-size: 50px;
     text-align: center;
+    padding-top: 20px;
 }
 p + div {
     display: flex;
@@ -36,7 +36,7 @@ p + div {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-right: 200px;
+    max-height: 600px;
 }
 h1 {
     font-size: 100px;
@@ -56,6 +56,9 @@ label {
 input {
     width: 268px;
     height: 71px;
+}
+.zareg {
+    background-color: #E29A72;
 }
 form > button {
     border-radius: 10px;
@@ -86,6 +89,7 @@ form > button {
     background-color: #F5F5F5;
     height: 290px;
     width: 435px;
+    margin-bottom: 100px;
 
 }
 .akk > p {
@@ -111,7 +115,9 @@ form > button {
     font-size: 30px;
     height: 300px;
 }
-
+#fileList {
+    font-size: 20px;
+}
 
 
 

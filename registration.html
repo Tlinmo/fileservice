@@ -10,6 +10,7 @@
 <body>
     <main>
         <p>Микросервис для хранения файлов</p>
+        
         <div>
             <div class="reg">
                 <h1>FileServer</h1>
@@ -17,11 +18,15 @@
                 <input type="text" id="registerName" placeholder="логин">
                 <label for="registerPassword">Введите пароль</label>
                 <input type="password" id="registerPassword" placeholder="пароль">
-                <button id="registerButton">зарегистрироваться</button>
-                <div id="registerError" class="error-message"></div>
+                <form>
+                   <button id="registerButton">зарегистрироваться</button> 
+                </form>
                 <h1>FileServer</h1>
+                <div id="registerError" class="error-message"></div>
+                
             </div>
             <p class="parol">Пароль должен содержать от 4 до 10 символов</p>
+            <a href="index.html">Назад</a>
         </div>
     </main>
     <script src="registration.js"></script>
