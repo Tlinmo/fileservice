@@ -99,3 +99,15 @@ def save(
             filename = f"{filename}.encrypted"
             
         return file_size
+
+def reader(filename: str):
+    file_type = filename.split('.')[-1]
+    
+    match file_type:
+        case "gz":
+            return read_compress_file(filename)
+        case "encrypted":
+            return read_encrypt_compress_file(filename)
+        case _:
+            # Если ничего из выше перечисленого не сработало
+            pass
