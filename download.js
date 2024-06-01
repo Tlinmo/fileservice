@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const dropZone = document.getElementById('dropZone');
     const currentUser = localStorage.getItem('currentUser');
-    const currentUserRole = localStorage.getItem('currentUserRole');
 
     if (!currentUser) {
         alert('Вы не авторизованы');

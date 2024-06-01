@@ -1,7 +1,8 @@
-document.getElementById('loginButton').addEventListener('click', function () {
+document.getElementById('loginButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    
     const loginName = document.getElementById('name').value;
     const loginPassword = document.getElementById('password').value;
-    const role = document.getElementById('role').value;
     const loginError = document.getElementById('loginError');
 
     if (!loginName || !loginPassword) {
@@ -18,11 +19,11 @@ document.getElementById('loginButton').addEventListener('click', function () {
             // Сохраняем информацию о текущем пользователе
             localStorage.setItem('currentUser', loginName);
             localStorage.setItem('currentUserRole', user.role);
-            // Перенаправление на страницу личного кабинета или админ панели
+            // Перенаправление на страницу загрузки файлов или админ панели
             if (user.role === 'admin') {
                 window.location.href = 'admin.html';
             } else {
-                window.location.href = 'lk.html';
+                window.location.href = 'download.html';
             }
         } else {
             loginError.textContent = 'Неверный пароль';
