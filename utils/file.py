@@ -19,13 +19,17 @@ def _path_to_file(file_type: str, filename, user_id: int) -> str:
     return os.path.abspath(_directory + str(filename))
 
 
+def delete(filename):
+    os.remove(filename)
+
+
 # Сжатие файла
 def compress_file(filename: str):
     with open(filename, "rb") as f:
         data = f.read()
         with gzip.open(f"{filename}.gz", "wb") as f_out:
             f_out.write(data)
-            #os.remove(filename)
+            os.remove(filename)
 
 
 # Чтение сжатого файла
@@ -43,7 +47,7 @@ def encrypt_file(filename):
         encrypted_data = cipher.encrypt(data)
         with open(f"{filename}.encrypted", "wb") as f_out:
             f_out.write(encrypted_data)
-            #os.remove(filename)
+            os.remove(filename)
 
 
 # Чтение зашифрованного файла

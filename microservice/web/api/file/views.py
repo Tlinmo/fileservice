@@ -12,7 +12,7 @@ from microservice.db.dependencies import get_db_session
 from microservice.db import crud
 from microservice.settings import ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from microservice.settings import settings
-from utils.file import save, _path_to_file, read_compress_file, read_encrypt_compress_file
+from utils.file import save, _path_to_file, read_compress_file, read_encrypt_compress_file, delete
 
 
 router = APIRouter()
@@ -93,11 +93,12 @@ async def get_file(
 @router.post("/del_file")
 async def del_file(
     current_user: Annotated[PrivateUser, Depends(crud.user.get_current_user)],
-    file: PublicFile,
+    file_p: PublicFile,
     db: AsyncSession = Depends(get_db_session)
 ):
-    file = await crud.file.get_file(db, current_user.id, file.file_name)
+    file = await crud.file.get_file(db, current_user.id, file_p.file_name)
     if file:
+        delete(_path_to_file(file.file_type, file.file_name + ".gz" + ".encrypted" if current_user.crypt_file else "", current_user.id))
         await crud.file.del_file(db, current_user.id, file.id)
     else:
         raise HTTPException(400, "File not Found")

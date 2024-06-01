@@ -40,5 +40,7 @@ async def del_file(db: AsyncSession, user_id: int, file_id: int):
         .filter(files.File.user_id == user_id)
         .filter(files.File.id == file_id)
     )
-    file = await db.execute(sql)
-    db.delete(file)
+    file = (await db.execute(sql)).scalar()
+    if file:
+        await db.delete(file)
+        await db.commit()
