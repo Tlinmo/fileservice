@@ -14,6 +14,7 @@ from microservice.db.dependencies import get_db_session
 from microservice.settings import ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from microservice.settings import settings
 from microservice.web.api.user.schema import TokenData
+from microservice.settings import LOGS_PATH
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -54,6 +55,9 @@ async def get_current_user(
 
 
 async def create_user(db: AsyncSession, user: UserCreate):
+    with open(LOGS_PATH, 'a') as file_w:
+        file_w.write(f"User {user.username} has been created\n")
+    
     hashed_password = pwd_context.hash(user.password)
     db_user = users.User(username=user.username, hashed_password=hashed_password)
     db.add(db_user)
@@ -80,6 +84,8 @@ async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100):
 async def update_user(db: AsyncSession, user_id: int, user_update: UserUpdate):
     db_user = await get_user_by_id(db, user_id)
     if db_user:
+        with open(LOGS_PATH, 'a') as file_w:
+            file_w.write(f"User {user_id} has been changed permission\n")
         for field, value in user_update.model_dump(exclude_unset=True).items():
             setattr(db_user, field, value)
         await db.commit()

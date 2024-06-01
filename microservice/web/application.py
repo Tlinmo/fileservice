@@ -40,10 +40,6 @@ def get_app() -> FastAPI:
     app.include_router(router=pages_router)
     # Adds static directory.
     # This directory is used to access swagger files.
-    app.mount(
-        "/static",
-        StaticFiles(directory=APP_ROOT / "static"),
-        name="static",
-    )
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
     return app

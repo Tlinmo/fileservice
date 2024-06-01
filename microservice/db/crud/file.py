@@ -4,6 +4,7 @@ from passlib.context import CryptContext
 
 from microservice.web.api.file.schema import File
 from microservice.db.models import users, files
+from microservice.settings import LOGS_PATH
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -28,6 +29,9 @@ async def get_file(db: AsyncSession, user_id: int, file_name: str):
 
 
 async def save_file(db: AsyncSession, file: File):
+    with open(LOGS_PATH, 'a') as file_w:
+        file_w.write(f"User {file.user_id} uploaded file {file.file_name}\n")
+        
     db_file = files.File(**file.model_dump())
     db.add(db_file)
     await db.commit()
@@ -42,5 +46,7 @@ async def del_file(db: AsyncSession, user_id: int, file_id: int):
     )
     file = (await db.execute(sql)).scalar()
     if file:
+        with open(LOGS_PATH, 'a') as file_w:
+            file_w.write(f"User {user_id} deleted file {file_id}\n")
         await db.delete(file)
         await db.commit()

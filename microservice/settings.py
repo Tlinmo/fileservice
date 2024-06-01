@@ -9,6 +9,7 @@ from yarl import URL
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10080
 UPLOAD_DIRECTORY = f"./media/uploads/"
+LOGS_PATH = f"./logs.txt"
 TEMP_DIR = Path(gettempdir())
 
 

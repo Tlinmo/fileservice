@@ -8,7 +8,7 @@ from microservice.web.api import docs, user, file, admin
 pages_router = APIRouter()
 
 APP_ROOT = Path(__file__).parent.parent
-templates = Jinja2Templates(directory=APP_ROOT / "templates")
+templates = Jinja2Templates(directory="templates")
 
 
 @pages_router.get("/")

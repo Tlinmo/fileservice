@@ -95,17 +95,7 @@ async def del_file(
     if current_user.can_delete:
         file = await crud.file.get_file(db, current_user.id, file_p.file_name)
         if file:
-            delete(
-                _path_to_file(
-                    file.file_type,
-                    (
-                        file.file_name + ".gz" + ".encrypted"
-                        if current_user.crypt_file
-                        else ""
-                    ),
-                    current_user.id,
-                )
-            )
+            delete(file.file_path)
             await crud.file.del_file(db, current_user.id, file.id)
         else:
             raise HTTPException(400, "File not Found")

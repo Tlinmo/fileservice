@@ -10,4 +10,5 @@ class File(PublicFile):
     user_id: int
     file_size: float
     file_type: str
+    file_path: str
     date: datetime
