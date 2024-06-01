@@ -11,6 +11,7 @@ class File(Base):
     user_id = Column(Integer, index=True)
     file_size = Column(Double, index=True)
     file_type = Column(String, index=True)
+    file_path = Column(String, index=True)
     file_name = Column(String, index=True)
     date = Column(DateTime, index=True)
     

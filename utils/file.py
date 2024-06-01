@@ -10,7 +10,7 @@ from microservice.settings import settings
 from microservice.settings import UPLOAD_DIRECTORY
 
 
-def _path_to_file(file_type: str, filename, user_id: int) -> str:
+def _path_to_file(file_type: str, filename: str, user_id: int) -> str:
     _directory = f"{UPLOAD_DIRECTORY}/{user_id}/{file_type}/"
 
     if not os.path.exists(_directory):
@@ -19,7 +19,7 @@ def _path_to_file(file_type: str, filename, user_id: int) -> str:
     return os.path.abspath(_directory + str(filename))
 
 
-def delete(filename):
+def delete(filename: str):
     os.remove(filename)
 
 
@@ -27,22 +27,22 @@ def delete(filename):
 def compress_file(filename: str):
     with open(filename, "rb") as f:
         data = f.read()
-        with gzip.open(f"{filename}.gz", "wb") as f_out:
+        with gzip.open(filename, "wb") as f_out:
             f_out.write(data)
             os.remove(filename)
 
 
 # Чтение сжатого файла
-def read_compress_file(filename):
-    with gzip.open(filename + ".gz", "rb") as f:
+def _read_compress_file(filename: str):
+    with gzip.open(filename, "rb") as f:
         file_content = f.read()
         return file_content
 
 
 # Шифрование файла
-def encrypt_file(filename):
+def encrypt_file(filename: str):
     cipher = Fernet(settings.encrypt_key)
-    with open(f"{filename}", "rb") as f:
+    with open(filename, "rb") as f:
         data = f.read()
         encrypted_data = cipher.encrypt(data)
         with open(f"{filename}.encrypted", "wb") as f_out:
@@ -51,7 +51,7 @@ def encrypt_file(filename):
 
 
 # Чтение зашифрованного файла
-def read_encrypt_file(filename):
+def _read_encrypt_file(filename: str):
     cipher = Fernet(settings.encrypt_key)
 
     with open(f"{filename}", "rb") as f:
@@ -62,10 +62,10 @@ def read_encrypt_file(filename):
 
 
 #  Чтение зашифрованного сжатого файла
-def read_encrypt_compress_file(filename):
+def _read_encrypt_compress_file(filename: str):
     cipher = Fernet(settings.encrypt_key)
 
-    with open(filename + ".gz.encrypted", "rb") as f:
+    with open(filename, "rb") as f:
         encrypted_data = f.read()
         decrypted_data = cipher.decrypt(encrypted_data)
 
@@ -78,34 +78,63 @@ def read_encrypt_compress_file(filename):
         return data
 
 
+def _read_file(filename: str):
+    with open(filename, 'rb') as f:
+        data = f.read()
+        return data
+
+# Юзаем это для того что бы читать файлы и радуемся
+def reader(filename: str):
+    file_type = filename.split(".")
+    file_type = 'gz.encrypted' if file_type[-1:-2] == ['gz', 'encrypted'] else file_type[-1]
+    
+    print(file_type)
+    print(file_type)
+    print(file_type)
+    print(file_type)
+    print(file_type)
+    print(file_type)
+    
+    match file_type:
+        case "gz":
+            return _read_compress_file(filename)
+        case "encrypted":
+            return _read_encrypt_file(filename)
+        case "gz.encrypted":
+            return _read_encrypt_compress_file(filename)
+        case _:
+            return _read_file(filename)
+
 # Сохранение файла
 def save(
     file: UploadFile,
-    filename: str,
     user_id: int,
     size_limit: int,
     zipped: bool = True,
     encrypted: bool = False,
-    quality: int = 100
+    quality: int = 100,
 ):
     file_type = file.filename.split(".")[-1]
 
-    directory = _path_to_file(file_type, filename, user_id)
+    directory = _path_to_file(file_type, file.filename, user_id)
 
     with open(directory, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-        
+
     file_size = os.path.getsize(directory) / 1000 / 1000
     if file_size > size_limit and size_limit != -1:
         return -1
-    
+
     if zipped:
         compress_file(directory)
-        directory = _path_to_file(file_type, f"{filename}.gz", user_id)
-        filename = f"{filename}.gz"
+        directory = _path_to_file(file_type, f"{file.filename}.gz", user_id)
+        filename = f"{file.filename}.gz"
     if encrypted:
         encrypt_file(directory)
-        directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
-        filename = f"{filename}.encrypted"
-        
-    return file_size
+        directory = _path_to_file(file_type, f"{file.filename}.encrypted", user_id)
+        filename = f"{file.filename}.encrypted"
+
+    return {
+        "file_size": file_size,
+        "path": filename,
+    }
