@@ -31,39 +31,83 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const errorMessages = [];
         const successMessages = [];
+        let pendingFiles = Array.from(files);
 
-        if (user.maxFileCount && userFiles.length + files.length > user.maxFileCount) {
-            errorMessages.push(`Превышено максимальное количество файлов (${user.maxFileCount})`);
-        } else {
-            Array.from(files).forEach(file => {
-                if (user.maxFileSize && file.size / 1024 / 1024 > user.maxFileSize) {
-                    errorMessages.push(`Файл ${file.name} превышает максимальный размер (${user.maxFileSize} МБ)`);
-                    return;
-                }
+        function processFile(file) {
+            if (user.maxFileCount && userFiles.length >= user.maxFileCount) {
+                errorMessages.push(`Превышено максимальное количество файлов (${user.maxFileCount})`);
+                checkCompletion();
+                return;
+            }
 
-                const fileExtension = file.name.split('.').pop().toLowerCase();
-                if (user.allowedExtensions && !user.allowedExtensions.includes(fileExtension)) {
-                    errorMessages.push(`Файл ${file.name} имеет недопустимое расширение (${fileExtension})`);
-                    return;
-                }
+            if (user.maxFileSize && file.size / 1024 / 1024 > user.maxFileSize) {
+                errorMessages.push(`Файл ${file.name} превышает максимальный размер (${user.maxFileSize} МБ)`);
+                checkCompletion();
+                return;
+            }
 
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const fileContent = event.target.result;
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (user.allowedExtensions && !user.allowedExtensions.includes(fileExtension)) {
+                errorMessages.push(`Файл ${file.name} имеет недопустимое расширение (${fileExtension})`);
+                checkCompletion();
+                return;
+            }
+
+            const existingFileIndex = userFiles.findIndex(existingFile => existingFile.name === file.name);
+            if (existingFileIndex !== -1) {
+                showReplaceModal(file, existingFileIndex);
+            } else {
+                saveFile(file, userFiles);
+            }
+        }
+
+        function saveFile(file, userFiles, index = null) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const fileContent = event.target.result;
+                if (index !== null) {
+                    userFiles[index] = { name: file.name, content: fileContent };
+                } else {
                     userFiles.push({ name: file.name, content: fileContent });
-                    localStorage.setItem(currentUser + '_files', JSON.stringify(userFiles));
-                    successMessages.push(`Файл ${file.name} успешно загружен`);
-                    if (successMessages.length + errorMessages.length === files.length) {
-                        displayMessages(successMessages, errorMessages);
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
+                }
+                localStorage.setItem(currentUser + '_files', JSON.stringify(userFiles));
+                successMessages.push(`Файл ${file.name} успешно загружен`);
+                checkCompletion();
+            };
+            reader.readAsDataURL(file);
         }
 
-        if (successMessages.length + errorMessages.length === files.length) {
-            displayMessages(successMessages, errorMessages);
+        function checkCompletion() {
+            pendingFiles.shift();
+            if (pendingFiles.length > 0) {
+                processFile(pendingFiles[0]);
+            } else {
+                displayMessages(successMessages, errorMessages);
+            }
         }
+
+        function showReplaceModal(file, index) {
+            const replaceModal = document.getElementById('replaceModal');
+            const replaceMessage = document.getElementById('replaceMessage');
+            const confirmReplace = document.getElementById('confirmReplace');
+            const cancelReplace = document.getElementById('cancelReplace');
+
+            replaceMessage.textContent = `Файл с именем ${file.name} уже существует. Хотите заменить его?`;
+            replaceModal.style.display = 'block';
+
+            confirmReplace.onclick = function() {
+                replaceModal.style.display = 'none';
+                saveFile(file, userFiles, index);
+            };
+
+            cancelReplace.onclick = function() {
+                replaceModal.style.display = 'none';
+                errorMessages.push(`Файл ${file.name} уже существует и не был загружен`);
+                checkCompletion();
+            };
+        }
+
+        processFile(pendingFiles[0]);
     }
 
     function displayMessages(successMessages, errorMessages) {

@@ -8,11 +8,8 @@
 html, body {
     width: 100%;
     height: 100%;
-    background: #ccc;
     padding: 0;
     margin: 0;
-}
-body {
     background-image: url('images/qwe.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,6 +17,11 @@ body {
 }
 
 
+.adm {
+    display: flex;
+    flex-direction: column;
+    
+}
 main > p {
     margin-top: 0px;
     font-size: 50px;
@@ -127,8 +129,6 @@ input, #role {
 
 
 
-
-
 .error-message {
     color: red;
     margin-top: 10px;
@@ -153,3 +153,5 @@ input, #role {
 .file-options button {
     margin-right: 10px;
 }
+
+

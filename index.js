@@ -3,6 +3,7 @@ document.getElementById('loginButton').addEventListener('click', function(event)
     
     const loginName = document.getElementById('name').value;
     const loginPassword = document.getElementById('password').value;
+    const selectedRole = document.getElementById('role').value; // Получаем выбранную роль
     const loginError = document.getElementById('loginError');
 
     if (!loginName || !loginPassword) {
@@ -20,7 +21,7 @@ document.getElementById('loginButton').addEventListener('click', function(event)
             localStorage.setItem('currentUser', loginName);
             localStorage.setItem('currentUserRole', user.role);
             // Перенаправление на страницу загрузки файлов или админ панели
-            if (user.role === 'admin') {
+            if (user.role === 'admin' && selectedRole === 'admin') { // Проверяем выбранную роль
                 window.location.href = 'admin.html';
             } else {
                 window.location.href = 'download.html';
