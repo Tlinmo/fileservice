@@ -56,3 +56,7 @@ form + h1 {
 .file-options button {
     margin-right: 10px;
 }
+.error-message {
+    color: red;
+    margin-top: 10px;
+}

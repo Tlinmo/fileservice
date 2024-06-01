@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,23 +7,23 @@
      <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
      <title>fileServis</title>
 </head>
-
 <body>
     <main>
-     <h1>микросервис для хранения файлов</h1>
-     <div>
+        <h1>микросервис для хранения файлов</h1>
         <div>
-            <p>FileServer</p>
-            <label for="name">Введите логин</label>
-            <input type="text" id="name" placeholder="логин">
-            <label for="password">Введите пароль</label>
-            <input type="text" id="password" placeholder="пароль">
-            <form action="download.html">
-                <button>зарегистрироваться</button> 
-            </form>
-            <p>FileServer</p>
-         </div>
-         <div>Пароль не должен содержать ...</div>
-     </div>
+            <div>
+                <p>FileServer</p>
+                <label for="registerName">Введите логин</label>
+                <input type="text" id="registerName" placeholder="логин">
+                <label for="registerPassword">Введите пароль</label>
+                <input type="password" id="registerPassword" placeholder="пароль">
+                <button id="registerButton">зарегистрироваться</button> 
+                <div id="registerError" class="error-message"></div>
+                <p>FileServer</p>
+            </div>
+            <div>Пароль не должен содержать ...</div>
+        </div>
     </main>
+    <script src="registration.js"></script>
 </body>
+</html>
