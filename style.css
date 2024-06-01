@@ -5,7 +5,13 @@
     font-weight: normal; 
 }
 
-
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    padding: 0;
+    margin: 0;
+}
 body {
     background-image: url('images/qwe.jpg');
     background-repeat: no-repeat;
@@ -15,6 +21,8 @@ body {
 
 
 main > p {
+    padding-top: 50px;
+    margin-top: 0px;
     font-size: 50px;
     text-align: center;
 }
@@ -94,6 +102,21 @@ form > button {
     margin-bottom: 100px;
     width: 350px;
 }
+.ku {
+    display: flex;
+    justify-content: space-between;
+}
+.drop-zone {
+    margin-top: 30px;
+    font-size: 30px;
+    height: 300px;
+}
+
+
+
+
+
+
 .error-message {
     color: red;
     margin-top: 10px;
