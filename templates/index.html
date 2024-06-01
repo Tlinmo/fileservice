@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <link rel="stylesheet" href="static/css/style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
+     <title>fileServis</title>
+</head>
+<body>
+    <main>
+        <p>Микросервис для хранения файлов</p>
+        <div>
+            <div class="reg">
+                <h1>FileServer</h1>
+                <label for="name">Введите логин</label>
+                <input type="text" id="name" placeholder="логин">
+                <label for="password">Введите пароль</label>
+                <input type="password" id="password" placeholder="пароль">
+                <label for="role">Выберите роль</label>
+                <select id="role">
+                    <option value="user">Пользователь</option>
+                    <option value="admin">Администратор</option>
+                </select>
+                <button id="loginButton">вход</button>
+                <div id="loginError" class="error-message"></div>
+                <h1 class="reverse">FileServer</h1>
+            </div>
+            <div class="akk">
+                <p>Ещё нет аккаунта?</p>
+                <form action="registration">
+                    <button class="zareg">зарегистрироваться</button> 
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="static/js/index.js"></script>
+</body>
+</html>

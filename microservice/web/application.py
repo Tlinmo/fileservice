@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from microservice.logging import configure_logging
 from microservice.web.api.router import api_router
+from microservice.web.sites.router import pages_router
 from microservice.web.lifetime import register_shutdown_event, register_startup_event
 
 APP_ROOT = Path(__file__).parent.parent
@@ -36,6 +37,7 @@ def get_app() -> FastAPI:
 
     # Main router for the API.
     app.include_router(router=api_router, prefix="/api")
+    app.include_router(router=pages_router)
     # Adds static directory.
     # This directory is used to access swagger files.
     app.mount(
