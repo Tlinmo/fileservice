@@ -96,6 +96,9 @@ def save(
         shutil.copyfileobj(file.file, buffer)
         
     file_size = os.path.getsize(directory)
+    if file_size > size_limit and size_limit != -1:
+        return -1
+    
     if zipped:
         compress_file(directory)
         directory = _path_to_file(file_type, f"{filename}.gz", user_id)
@@ -104,4 +107,5 @@ def save(
         encrypt_file(directory)
         directory = _path_to_file(file_type, f"{filename}.encrypted", user_id)
         filename = f"{filename}.encrypted"
+        
     return file_size
