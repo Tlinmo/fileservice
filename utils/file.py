@@ -95,7 +95,7 @@ def save(
     with open(directory, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
         
-    file_size = os.path.getsize(directory)
+    file_size = os.path.getsize(directory) / 1024 / 1024
     if file_size > size_limit and size_limit != -1:
         return -1
     
