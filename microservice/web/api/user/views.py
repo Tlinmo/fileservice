@@ -68,7 +68,6 @@ async def api_create_user(user: UserCreate, db: AsyncSession = Depends(get_db_se
 async def read_users(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db_session)):
     users = await crud.user.get_users(db, skip=skip, limit=limit)
     return users
-    # return [PublicUser(id=user.id, username=user.username, is_superuser=user.is_superuser) for user in users]
 
 
 @router.get("/{user_id:int}", response_model=PublicUser)

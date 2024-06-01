@@ -1,17 +1,15 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 from typing import Annotated, List
 import io
 
-from fastapi import APIRouter, Depends, HTTPException, status, File as FFile, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, File as FFile, UploadFile
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from microservice.web.api.file.schema import PublicFile, File
-from microservice.web.api.user.schema import UserCreate, PrivateUser, Token, TokenData, PublicUser
+from microservice.web.api.user.schema import PrivateUser
 from microservice.db.dependencies import get_db_session
 from microservice.db import crud
-from microservice.settings import ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from microservice.settings import settings
 from utils.file import save, _path_to_file, read_compress_file, read_encrypt_compress_file, delete
 
 
@@ -71,10 +69,10 @@ async def upload_files(
 @router.post("/get_file")
 async def get_file(
     current_user: Annotated[PrivateUser, Depends(crud.user.get_current_user)],
-    file: PublicFile,
+    _file: PublicFile,
     db: AsyncSession = Depends(get_db_session)
 ):
-    file = await crud.file.get_file(db, current_user.id, file.file_name)
+    file = await crud.file.get_file(db, current_user.id, _file.file_name)
     if file:
         path = _path_to_file(file.file_type, file.file_name, current_user.id)
         
