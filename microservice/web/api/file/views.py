@@ -3,7 +3,7 @@ from typing import Annotated, List
 import io
 
 from fastapi import APIRouter, Depends, HTTPException, File as FFile, UploadFile
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from microservice.web.api.file.schema import PublicFile, File
@@ -71,14 +71,17 @@ async def get_file(
     current_user: Annotated[PrivateUser, Depends(crud.user.get_current_user)],
     _file: PublicFile,
     db: AsyncSession = Depends(get_db_session),
-):
+):  
+    async def file_iterator(file_path: str):
+        with open(file_path, "rb") as file:
+            while chunk := file.read(65536):
+                yield chunk
+            
     file = await crud.file.get_file(db, current_user.id, _file.file_name)
     if file:
-        file_b = reader(file.file_path)
-        file_b = io.BytesIO(file_b)
-
+        file_path = file.file_path
         return StreamingResponse(
-            file_b,
+            file_iterator(file_path),
             media_type="application/octet-stream",
             headers={"Content-Disposition": f"attachment; filename={file.file_name}"},
         )
